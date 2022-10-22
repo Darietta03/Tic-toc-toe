@@ -1,0 +1,16 @@
+
+.body {
+    background-color: #3cdfae;
+    background-size: 100%;
+}
+
+.form__btn {
+    color: #3cdfae;
+    background-color: azure;
+}
+
+td {
+  height: 150px;  
+  width: 150px;
+}
+

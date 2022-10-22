@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./style.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body class="body">
+    <div id="app" class="wrapper text-light ">
+        <div class="container ">
+            <div v-show="goToField == 'true'">
+                <h2 class="text-center">Добро пожаловать в игру крестики нолики!</h2>
+            <p>Пожалуйста, введите имена игроков:</p>
+            <form action="#" class="form py-3">
+                <div class="py-2">
+                    <label for="playerOne" class="me-2">Игрок 1</label>
+                    <input type="text" id="playerOne" placeholder="Введите имя" v-model="userOne">
+                </div>
+                <div class="py-2">
+                    <label for="playerTwo" class="me-2">Игрок 2</label>
+                    <input type="text" id="playerTwo" placeholder="Введите имя" v-model="userTwo">
+                </div>
+                <button class="my-3 btn btn-outline-light btn-lg form__btn" :disabled="stateOfBtn" @click="changePage">Старт</button>  
+            </form>
+            </div>
+            
+            <div class="my-5" v-show="goToField == 'false'">
+              <div class="text-center py-3 fw-bold fs-3">{{userOne}}</div>
+                <div class="d-flex justify-content-center container__table">
+                     <table class="table__table text-center border fs-1">
+                        <tr>
+                          <td id="1" @click ="addSign"></td>
+                          <td id="2" class="border border-top-0 " @click="addSign"></td>
+                          <td id="3" @click ="addSign"></td>
+                        </tr> 
+                        <tr>
+                          <td id="4" class="border border-start-0" @click="addSign"></td>
+                          <td id="5" @click="addSign"></td>
+                          <td id="6" class="border border-end-0" @click="addSign"></td>
+                        </tr>
+                        <tr>
+                          <td id="7" @click="addSign"></td>
+                          <td id="8" class="border border-bottom-0" @click="addSign"></td>
+                          <td id="9" @click="addSign" ></td>
+                        </tr>
+                   </table>     
+
+                   <!-- <table class="border">
+                    <tr v-for="(value, key, index) in object" >
+                        <td @click.stop="addSign">{{ url }}</td>
+                        <td @click.stop="addSign">{{ url }}</td>
+                        <td @click.stop="addSign">{{ url }}</td>
+                        
+                    </tr>
+                </table> -->
+                   
+              </div>
+                <div class="text-center py-4 fw-bold fs-3">{{userTwo}}</div>
+            </div>
+        </div>
+    </div>
+    <script src="./main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <script>
+        const { createApp } = Vue
+      
+        createApp({
+          data() {
+            return {
+              userOne: '',
+              userTwo: '',
+              goToField: 'true',
+              arrOne: [],
+              arrTwo: [],
+              player:'',
+              winComb: [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9],
+                [1, 4, 7],
+                [2, 5, 8],
+                [3, 6, 9],
+                [1, 5, 9],
+                [3, 5, 7],
+              ],
+              comb:''
+
+            }
+          }, 
+       
+          methods: {
+            changePage(event) {
+                this.goToField = 'false'
+                console.log(this.goToField)
+               
+            },
+
+            addSign(cell) {
+              console.log(cell.target)
+             
+
+              if(this.arrOne.length === this.arrTwo.length) {
+                this.player = this.userOne
+                //cell.target.firstElementChild.src=this.url = './Pictures/x.svg'
+                //this.url = './Pictures/x.svg'
+                //this.url = 'X'
+                cell.target.textContent = 'X'
+
+                this.arrOne.push(Number(cell.target.id))
+                console.log(this.arrOne)
+
+                this.arrOne.sort(function(a, b) {
+                 return a - b;
+                });
+                console.log(this.arrOne)
+
+
+
+
+
+
+              } else {
+                this.player = this.userTwo
+                //this.url = './Pictures/circle.svg'
+                //this.url = '0'
+                cell.target.textContent = '0'
+
+                this.arrTwo.push(Number(cell.target.id))
+                console.log(this.arrTwo)
+
+                this.arrTwo.sort(function(a, b) {
+                 return a - b;
+                });
+                console.log(this.arrTwo)
+              }
+
+             
+              if(this.arrOne.length >= 3 || this.arrTwo.length >= 3) {
+                for(let i = 0; i < this.winComb.length; i++) {
+                  console.log(this.winComb[i].join())
+                
+                  if(this.arrOne === this.winComb[i]) {
+                    console.log('one')
+                  } else if (this.arrTwo === this.winComb[i]) {
+                    console.log('two')
+                  } else {
+                    console.log('buy')
+                  }
+
+                
+                
+                
+              } 
+              }
+               
+
+              
+
+            }
+          },
+      
+          computed: {
+            stateOfBtn() {
+            if (this.userOne.length > 0 && this.userTwo.length > 0) {
+                return false
+            } else {
+                return true
+            }       
+        }
+          }
+
+
+        }).mount('#app')
+      </script>
+</body>
+</html>
