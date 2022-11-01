@@ -14,3 +14,14 @@ td {
   width: 150px;
 }
 
+.result {
+    width: 400px;
+    height: 300px;
+    color: #3cdfae;
+    background-color: #ffffff;
+    border: #7deccb 3px solid;
+}
+
+.buttonTwo {
+    background-color: #3cdfae;
+}
